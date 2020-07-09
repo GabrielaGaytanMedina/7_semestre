@@ -1,0 +1,17 @@
+ent [5]Hola, Holas
+ent dato, a, ad
+
+func ent Cuqui(sin) inicio
+	ent dato
+	dato := 5 + 2
+	escribir 5
+	si verdadero oo falso yy verdadero entonces
+		escribir 5
+	fin
+	mientras 4 > 3 hacer 
+		leer a
+	fin
+	leer a
+	devolver 5 
+	<**>
+fin

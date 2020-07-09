@@ -1,0 +1,37 @@
+ent x
+ent Hola
+car [20]datos
+registro
+inicio
+car sijala 
+
+fin z
+
+func car main(sin) inicio
+	car p
+	ent valores
+	ent [5]Hola
+	escribir "c"
+	si 2 < 1 yy 3 >= 2
+		escribir 5
+	sino
+		escribir 10
+	fin
+	valores := 45 - 32
+	leer p
+	leer x
+	devolver "c"
+	<**>
+fin
+func ent suma(sin) inicio
+	ent y
+	ent z, res
+	res := 3 + 1
+	devolver 1
+fin
+func dreal funcion(sin) inicio
+	dreal z
+	dreal za
+	z := 1 + 1
+	devolver 3
+fin

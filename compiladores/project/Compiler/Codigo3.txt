@@ -1,0 +1,26 @@
+Codigo de tres direcciones:
+main:
+	print 0
+	if 2 < 1 goto 2
+	goto 3
+	if 3 >= 2 goto 4
+	goto 5
+Etiqueta5:
+	print 5
+	print 10
+	Id9 = 45 - 32
+	Id-1=9
+	scan 0
+	scan 0
+	return 0
+Etiqueta13:
+suma:
+	Id14 = 3 + 1
+	Id-2=14
+	return 1
+Etiqueta16:
+funcion:
+	Id17 = 1 + 1
+	Id0=-1
+	return 3
+Etiqueta19:

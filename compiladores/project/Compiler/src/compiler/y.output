@@ -1,0 +1,2101 @@
+   0  $accept : program $end
+
+   1  $$1 :
+
+   2  program : $$1 declaraciones SL funciones
+
+   3  declaraciones : tipo lista_var SL declaraciones
+   4                | tipo_registro lista_var SL declaraciones
+   5                | error
+   6                |
+
+   7  $$2 :
+
+   8  tipo_registro : REGISTRO SL INICIO SL $$2 declaraciones SL FIN
+
+   9  $$3 :
+
+  10  tipo : base $$3 tipo_arreglo
+
+  11  base : ENT
+  12       | REAL
+  13       | DREAL
+  14       | CAR
+  15       | SIN
+
+  16  tipo_arreglo : LCOR NUM RCOR tipo_arreglo
+  17               |
+
+  18  lista_var : lista_var COMA ID
+  19            | ID
+
+  20  $$4 :
+
+  21  $$5 :
+
+  22  funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones
+  23            | error
+  24            |
+
+  25  argumentos : lista_arg
+  26             | SIN
+
+  27  lista_arg : lista_arg arg
+  28            | arg
+
+  29  arg : tipo_arg ID
+
+  30  $$6 :
+
+  31  tipo_arg : base $$6 param_arr
+
+  32  param_arr : LCOR RCOR param_arr
+  33            |
+
+  34  $$7 :
+
+  35  sentencias : sentencias SL $$7 sentencia
+  36             | sentencia
+
+  37  $$8 :
+
+  38  sentencia : SI expresion_booleana ENTONCES SL $$8 sentencias SL FIN
+
+  39  $$9 :
+
+  40  sentencia : SI expresion_booleana SL $$9 sentencias SL SINO SL sentencias SL FIN
+
+  41  $$10 :
+
+  42  sentencia : MIENTRAS expresion_booleana $$10 HACER SL sentencias SL FIN
+
+  43  $$11 :
+
+  44  sentencia : HACER SL $$11 sentencias SL MIENTRASQUE expresion_booleana
+  45            | ID ASIG expresion
+  46            | ESCRIBIR expresion
+  47            | LEER variable
+  48            | DEVOLVER
+  49            | DEVOLVER expresion
+  50            | TERMINAR
+
+  51  expresion_booleana : expresion_booleana O expresion_booleana
+  52                     | expresion_booleana Y expresion_booleana
+  53                     | NO expresion_booleana
+  54                     | relacional
+  55                     | VERDADERO
+  56                     | FALSO
+
+  57  relacional : relacional MEN relacional
+  58             | relacional MAY relacional
+  59             | relacional MENI relacional
+  60             | relacional MAYI relacional
+  61             | relacional II relacional
+  62             | relacional MM relacional
+  63             | expresion
+
+  64  expresion : expresion MAS expresion
+  65            | expresion MENOS expresion
+  66            | expresion POR expresion
+  67            | expresion DIV expresion
+  68            | expresion PRC expresion
+  69            | LPAR expresion RPAR
+  70            | variable
+  71            | NUM
+  72            | CADENA
+  73            | CARACTER
+  74            | ID LPAR parametros RPAR
+
+  75  variable : ID arreglo
+  76           | ID PNT ID
+
+  77  arreglo : ID LCOR expresion RCOR
+  78          | arreglo LCOR expresion RCOR
+  79          |
+
+  80  parametros : lista_param
+  81             |
+
+  82  lista_param : lista_param COMA expresion
+  83              | expresion
+
+state 0
+	$accept : . program $end  (0)
+	$$1 : .  (1)
+
+	.  reduce 1
+
+	program  goto 1
+	$$1  goto 2
+
+
+state 1
+	$accept : program . $end  (0)
+
+	$end  accept
+
+
+state 2
+	program : $$1 . declaraciones SL funciones  (2)
+	declaraciones : .  (6)
+
+	error  shift 3
+	REGISTRO  shift 4
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	SL  reduce 6
+
+	base  goto 10
+	tipo  goto 11
+	declaraciones  goto 12
+	tipo_registro  goto 13
+
+
+state 3
+	declaraciones : error .  (5)
+
+	.  reduce 5
+
+
+state 4
+	tipo_registro : REGISTRO . SL INICIO SL $$2 declaraciones SL FIN  (8)
+
+	SL  shift 14
+	.  error
+
+
+state 5
+	base : ENT .  (11)
+
+	.  reduce 11
+
+
+state 6
+	base : REAL .  (12)
+
+	.  reduce 12
+
+
+state 7
+	base : DREAL .  (13)
+
+	.  reduce 13
+
+
+state 8
+	base : CAR .  (14)
+
+	.  reduce 14
+
+
+state 9
+	base : SIN .  (15)
+
+	.  reduce 15
+
+
+state 10
+	tipo : base . $$3 tipo_arreglo  (10)
+	$$3 : .  (9)
+
+	.  reduce 9
+
+	$$3  goto 15
+
+
+state 11
+	declaraciones : tipo . lista_var SL declaraciones  (3)
+
+	ID  shift 16
+	.  error
+
+	lista_var  goto 17
+
+
+state 12
+	program : $$1 declaraciones . SL funciones  (2)
+
+	SL  shift 18
+	.  error
+
+
+state 13
+	declaraciones : tipo_registro . lista_var SL declaraciones  (4)
+
+	ID  shift 16
+	.  error
+
+	lista_var  goto 19
+
+
+state 14
+	tipo_registro : REGISTRO SL . INICIO SL $$2 declaraciones SL FIN  (8)
+
+	INICIO  shift 20
+	.  error
+
+
+state 15
+	tipo : base $$3 . tipo_arreglo  (10)
+	tipo_arreglo : .  (17)
+
+	LCOR  shift 21
+	ID  reduce 17
+
+	tipo_arreglo  goto 22
+
+
+state 16
+	lista_var : ID .  (19)
+
+	.  reduce 19
+
+
+state 17
+	declaraciones : tipo lista_var . SL declaraciones  (3)
+	lista_var : lista_var . COMA ID  (18)
+
+	COMA  shift 23
+	SL  shift 24
+	.  error
+
+
+state 18
+	program : $$1 declaraciones SL . funciones  (2)
+	funciones : .  (24)
+
+	error  shift 25
+	FUNC  shift 26
+	$end  reduce 24
+
+	funciones  goto 27
+
+
+state 19
+	declaraciones : tipo_registro lista_var . SL declaraciones  (4)
+	lista_var : lista_var . COMA ID  (18)
+
+	COMA  shift 23
+	SL  shift 28
+	.  error
+
+
+state 20
+	tipo_registro : REGISTRO SL INICIO . SL $$2 declaraciones SL FIN  (8)
+
+	SL  shift 29
+	.  error
+
+
+state 21
+	tipo_arreglo : LCOR . NUM RCOR tipo_arreglo  (16)
+
+	NUM  shift 30
+	.  error
+
+
+state 22
+	tipo : base $$3 tipo_arreglo .  (10)
+
+	.  reduce 10
+
+
+state 23
+	lista_var : lista_var COMA . ID  (18)
+
+	ID  shift 31
+	.  error
+
+
+state 24
+	declaraciones : tipo lista_var SL . declaraciones  (3)
+	declaraciones : .  (6)
+
+	error  shift 3
+	REGISTRO  shift 4
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	ID  reduce 6
+	TERMINAR  reduce 6
+	SL  reduce 6
+	MIENTRAS  reduce 6
+	SI  reduce 6
+	ESCRIBIR  reduce 6
+	LEER  reduce 6
+	DEVOLVER  reduce 6
+	HACER  reduce 6
+
+	base  goto 10
+	tipo  goto 11
+	declaraciones  goto 32
+	tipo_registro  goto 13
+
+
+state 25
+	funciones : error .  (23)
+
+	.  reduce 23
+
+
+state 26
+	funciones : FUNC . tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	.  error
+
+	base  goto 10
+	tipo  goto 33
+
+
+state 27
+	program : $$1 declaraciones SL funciones .  (2)
+
+	.  reduce 2
+
+
+state 28
+	declaraciones : tipo_registro lista_var SL . declaraciones  (4)
+	declaraciones : .  (6)
+
+	error  shift 3
+	REGISTRO  shift 4
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	ID  reduce 6
+	TERMINAR  reduce 6
+	SL  reduce 6
+	MIENTRAS  reduce 6
+	SI  reduce 6
+	ESCRIBIR  reduce 6
+	LEER  reduce 6
+	DEVOLVER  reduce 6
+	HACER  reduce 6
+
+	base  goto 10
+	tipo  goto 11
+	declaraciones  goto 34
+	tipo_registro  goto 13
+
+
+state 29
+	tipo_registro : REGISTRO SL INICIO SL . $$2 declaraciones SL FIN  (8)
+	$$2 : .  (7)
+
+	.  reduce 7
+
+	$$2  goto 35
+
+
+state 30
+	tipo_arreglo : LCOR NUM . RCOR tipo_arreglo  (16)
+
+	RCOR  shift 36
+	.  error
+
+
+state 31
+	lista_var : lista_var COMA ID .  (18)
+
+	.  reduce 18
+
+
+state 32
+	declaraciones : tipo lista_var SL declaraciones .  (3)
+
+	.  reduce 3
+
+
+state 33
+	funciones : FUNC tipo . ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	ID  shift 37
+	.  error
+
+
+state 34
+	declaraciones : tipo_registro lista_var SL declaraciones .  (4)
+
+	.  reduce 4
+
+
+state 35
+	tipo_registro : REGISTRO SL INICIO SL $$2 . declaraciones SL FIN  (8)
+	declaraciones : .  (6)
+
+	error  shift 3
+	REGISTRO  shift 4
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	SL  reduce 6
+
+	base  goto 10
+	tipo  goto 11
+	declaraciones  goto 38
+	tipo_registro  goto 13
+
+
+state 36
+	tipo_arreglo : LCOR NUM RCOR . tipo_arreglo  (16)
+	tipo_arreglo : .  (17)
+
+	LCOR  shift 21
+	ID  reduce 17
+
+	tipo_arreglo  goto 39
+
+
+state 37
+	funciones : FUNC tipo ID . LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	LPAR  shift 40
+	.  error
+
+
+state 38
+	tipo_registro : REGISTRO SL INICIO SL $$2 declaraciones . SL FIN  (8)
+
+	SL  shift 41
+	.  error
+
+
+state 39
+	tipo_arreglo : LCOR NUM RCOR tipo_arreglo .  (16)
+
+	.  reduce 16
+
+
+state 40
+	funciones : FUNC tipo ID LPAR . argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 42
+	.  error
+
+	base  goto 43
+	argumentos  goto 44
+	lista_arg  goto 45
+	arg  goto 46
+	tipo_arg  goto 47
+
+
+state 41
+	tipo_registro : REGISTRO SL INICIO SL $$2 declaraciones SL . FIN  (8)
+
+	FIN  shift 48
+	.  error
+
+
+state 42
+	base : SIN .  (15)
+	argumentos : SIN .  (26)
+
+	ID  reduce 15
+	RPAR  reduce 26
+	LCOR  reduce 15
+
+
+state 43
+	tipo_arg : base . $$6 param_arr  (31)
+	$$6 : .  (30)
+
+	.  reduce 30
+
+	$$6  goto 49
+
+
+state 44
+	funciones : FUNC tipo ID LPAR argumentos . RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	RPAR  shift 50
+	.  error
+
+
+state 45
+	argumentos : lista_arg .  (25)
+	lista_arg : lista_arg . arg  (27)
+
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	RPAR  reduce 25
+
+	base  goto 43
+	arg  goto 51
+	tipo_arg  goto 47
+
+
+state 46
+	lista_arg : arg .  (28)
+
+	.  reduce 28
+
+
+state 47
+	arg : tipo_arg . ID  (29)
+
+	ID  shift 52
+	.  error
+
+
+state 48
+	tipo_registro : REGISTRO SL INICIO SL $$2 declaraciones SL FIN .  (8)
+
+	.  reduce 8
+
+
+state 49
+	tipo_arg : base $$6 . param_arr  (31)
+	param_arr : .  (33)
+
+	LCOR  shift 53
+	ID  reduce 33
+
+	param_arr  goto 54
+
+
+state 50
+	funciones : FUNC tipo ID LPAR argumentos RPAR . INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	INICIO  shift 55
+	.  error
+
+
+state 51
+	lista_arg : lista_arg arg .  (27)
+
+	.  reduce 27
+
+
+state 52
+	arg : tipo_arg ID .  (29)
+
+	.  reduce 29
+
+
+state 53
+	param_arr : LCOR . RCOR param_arr  (32)
+
+	RCOR  shift 56
+	.  error
+
+
+state 54
+	tipo_arg : base $$6 param_arr .  (31)
+
+	.  reduce 31
+
+
+state 55
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO . $$4 SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+	$$4 : .  (20)
+
+	.  reduce 20
+
+	$$4  goto 57
+
+
+state 56
+	param_arr : LCOR RCOR . param_arr  (32)
+	param_arr : .  (33)
+
+	LCOR  shift 53
+	ID  reduce 33
+
+	param_arr  goto 58
+
+
+state 57
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 . SL declaraciones sentencias SL FIN SL $$5 funciones  (22)
+
+	SL  shift 59
+	.  error
+
+
+state 58
+	param_arr : LCOR RCOR param_arr .  (32)
+
+	.  reduce 32
+
+
+state 59
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL . declaraciones sentencias SL FIN SL $$5 funciones  (22)
+	declaraciones : .  (6)
+
+	error  shift 3
+	REGISTRO  shift 4
+	ENT  shift 5
+	REAL  shift 6
+	DREAL  shift 7
+	CAR  shift 8
+	SIN  shift 9
+	ID  reduce 6
+	TERMINAR  reduce 6
+	MIENTRAS  reduce 6
+	SI  reduce 6
+	ESCRIBIR  reduce 6
+	LEER  reduce 6
+	DEVOLVER  reduce 6
+	HACER  reduce 6
+
+	base  goto 10
+	tipo  goto 11
+	declaraciones  goto 60
+	tipo_registro  goto 13
+
+
+state 60
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones . sentencias SL FIN SL $$5 funciones  (22)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencias  goto 69
+	sentencia  goto 70
+
+
+state 61
+	sentencia : ID . ASIG expresion  (45)
+
+	ASIG  shift 71
+	.  error
+
+
+state 62
+	sentencia : TERMINAR .  (50)
+
+	.  reduce 50
+
+
+state 63
+	sentencia : MIENTRAS . expresion_booleana $$10 HACER SL sentencias SL FIN  (42)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	VERDADERO  shift 75
+	FALSO  shift 76
+	CADENA  shift 77
+	CARACTER  shift 78
+	NO  shift 79
+	.  error
+
+	expresion_booleana  goto 80
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 83
+
+
+state 64
+	sentencia : SI . expresion_booleana ENTONCES SL $$8 sentencias SL FIN  (38)
+	sentencia : SI . expresion_booleana SL $$9 sentencias SL SINO SL sentencias SL FIN  (40)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	VERDADERO  shift 75
+	FALSO  shift 76
+	CADENA  shift 77
+	CARACTER  shift 78
+	NO  shift 79
+	.  error
+
+	expresion_booleana  goto 84
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 83
+
+
+state 65
+	sentencia : ESCRIBIR . expresion  (46)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 85
+	variable  goto 82
+
+
+state 66
+	sentencia : LEER . variable  (47)
+
+	ID  shift 86
+	.  error
+
+	variable  goto 87
+
+
+state 67
+	sentencia : DEVOLVER .  (48)
+	sentencia : DEVOLVER . expresion  (49)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	SL  reduce 48
+
+	expresion  goto 88
+	variable  goto 82
+
+
+state 68
+	sentencia : HACER . SL $$11 sentencias SL MIENTRASQUE expresion_booleana  (44)
+
+	SL  shift 89
+	.  error
+
+
+state 69
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias . SL FIN SL $$5 funciones  (22)
+	sentencias : sentencias . SL $$7 sentencia  (35)
+
+	SL  shift 90
+	.  error
+
+
+state 70
+	sentencias : sentencia .  (36)
+
+	.  reduce 36
+
+
+state 71
+	sentencia : ID ASIG . expresion  (45)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 91
+	variable  goto 82
+
+
+state 72
+	expresion : NUM .  (71)
+
+	.  reduce 71
+
+
+state 73
+	expresion : ID . LPAR parametros RPAR  (74)
+	variable : ID . arreglo  (75)
+	variable : ID . PNT ID  (76)
+	arreglo : .  (79)
+
+	ID  shift 92
+	LPAR  shift 93
+	PNT  shift 94
+	MEN  reduce 79
+	MAY  reduce 79
+	MENI  reduce 79
+	MAYI  reduce 79
+	II  reduce 79
+	MM  reduce 79
+	MAS  reduce 79
+	MENOS  reduce 79
+	POR  reduce 79
+	DIV  reduce 79
+	PRC  reduce 79
+	RPAR  reduce 79
+	LCOR  reduce 79
+	RCOR  reduce 79
+	COMA  reduce 79
+	SL  reduce 79
+	ENTONCES  reduce 79
+	HACER  reduce 79
+	O  reduce 79
+	Y  reduce 79
+
+	arreglo  goto 95
+
+
+state 74
+	expresion : LPAR . expresion RPAR  (69)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 96
+	variable  goto 82
+
+
+state 75
+	expresion_booleana : VERDADERO .  (55)
+
+	.  reduce 55
+
+
+state 76
+	expresion_booleana : FALSO .  (56)
+
+	.  reduce 56
+
+
+state 77
+	expresion : CADENA .  (72)
+
+	.  reduce 72
+
+
+state 78
+	expresion : CARACTER .  (73)
+
+	.  reduce 73
+
+
+state 79
+	expresion_booleana : NO . expresion_booleana  (53)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	VERDADERO  shift 75
+	FALSO  shift 76
+	CADENA  shift 77
+	CARACTER  shift 78
+	NO  shift 79
+	.  error
+
+	expresion_booleana  goto 97
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 83
+
+
+state 80
+	sentencia : MIENTRAS expresion_booleana . $$10 HACER SL sentencias SL FIN  (42)
+	expresion_booleana : expresion_booleana . O expresion_booleana  (51)
+	expresion_booleana : expresion_booleana . Y expresion_booleana  (52)
+	$$10 : .  (41)
+
+	O  shift 98
+	Y  shift 99
+	HACER  reduce 41
+
+	$$10  goto 100
+
+
+state 81
+	relacional : expresion .  (63)
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	MEN  reduce 63
+	MAY  reduce 63
+	MENI  reduce 63
+	MAYI  reduce 63
+	II  reduce 63
+	MM  reduce 63
+	SL  reduce 63
+	ENTONCES  reduce 63
+	HACER  reduce 63
+	O  reduce 63
+	Y  reduce 63
+
+
+state 82
+	expresion : variable .  (70)
+
+	.  reduce 70
+
+
+state 83
+	expresion_booleana : relacional .  (54)
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional . MM relacional  (62)
+
+	MEN  shift 106
+	MAY  shift 107
+	MENI  shift 108
+	MAYI  shift 109
+	II  shift 110
+	MM  shift 111
+	SL  reduce 54
+	ENTONCES  reduce 54
+	HACER  reduce 54
+	O  reduce 54
+	Y  reduce 54
+
+
+state 84
+	sentencia : SI expresion_booleana . ENTONCES SL $$8 sentencias SL FIN  (38)
+	sentencia : SI expresion_booleana . SL $$9 sentencias SL SINO SL sentencias SL FIN  (40)
+	expresion_booleana : expresion_booleana . O expresion_booleana  (51)
+	expresion_booleana : expresion_booleana . Y expresion_booleana  (52)
+
+	SL  shift 112
+	ENTONCES  shift 113
+	O  shift 98
+	Y  shift 99
+	.  error
+
+
+state 85
+	sentencia : ESCRIBIR expresion .  (46)
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	SL  reduce 46
+
+
+state 86
+	variable : ID . arreglo  (75)
+	variable : ID . PNT ID  (76)
+	arreglo : .  (79)
+
+	ID  shift 92
+	PNT  shift 94
+	LCOR  reduce 79
+	SL  reduce 79
+
+	arreglo  goto 95
+
+
+state 87
+	sentencia : LEER variable .  (47)
+
+	.  reduce 47
+
+
+state 88
+	sentencia : DEVOLVER expresion .  (49)
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	SL  reduce 49
+
+
+state 89
+	sentencia : HACER SL . $$11 sentencias SL MIENTRASQUE expresion_booleana  (44)
+	$$11 : .  (43)
+
+	.  reduce 43
+
+	$$11  goto 114
+
+
+state 90
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL . FIN SL $$5 funciones  (22)
+	sentencias : sentencias SL . $$7 sentencia  (35)
+	$$7 : .  (34)
+
+	FIN  shift 115
+	ID  reduce 34
+	TERMINAR  reduce 34
+	MIENTRAS  reduce 34
+	SI  reduce 34
+	ESCRIBIR  reduce 34
+	LEER  reduce 34
+	DEVOLVER  reduce 34
+	HACER  reduce 34
+
+	$$7  goto 116
+
+
+state 91
+	sentencia : ID ASIG expresion .  (45)
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	SL  reduce 45
+
+
+state 92
+	arreglo : ID . LCOR expresion RCOR  (77)
+
+	LCOR  shift 117
+	.  error
+
+
+state 93
+	expresion : ID LPAR . parametros RPAR  (74)
+	parametros : .  (81)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	RPAR  reduce 81
+
+	expresion  goto 118
+	variable  goto 82
+	parametros  goto 119
+	lista_param  goto 120
+
+
+state 94
+	variable : ID PNT . ID  (76)
+
+	ID  shift 121
+	.  error
+
+
+state 95
+	variable : ID arreglo .  (75)
+	arreglo : arreglo . LCOR expresion RCOR  (78)
+
+	LCOR  shift 122
+	MEN  reduce 75
+	MAY  reduce 75
+	MENI  reduce 75
+	MAYI  reduce 75
+	II  reduce 75
+	MM  reduce 75
+	MAS  reduce 75
+	MENOS  reduce 75
+	POR  reduce 75
+	DIV  reduce 75
+	PRC  reduce 75
+	RPAR  reduce 75
+	RCOR  reduce 75
+	COMA  reduce 75
+	SL  reduce 75
+	ENTONCES  reduce 75
+	HACER  reduce 75
+	O  reduce 75
+	Y  reduce 75
+
+
+state 96
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+	expresion : LPAR expresion . RPAR  (69)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	RPAR  shift 123
+	.  error
+
+
+state 97
+	expresion_booleana : expresion_booleana . O expresion_booleana  (51)
+	expresion_booleana : expresion_booleana . Y expresion_booleana  (52)
+	expresion_booleana : NO expresion_booleana .  (53)
+
+	.  reduce 53
+
+
+state 98
+	expresion_booleana : expresion_booleana O . expresion_booleana  (51)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	VERDADERO  shift 75
+	FALSO  shift 76
+	CADENA  shift 77
+	CARACTER  shift 78
+	NO  shift 79
+	.  error
+
+	expresion_booleana  goto 124
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 83
+
+
+state 99
+	expresion_booleana : expresion_booleana Y . expresion_booleana  (52)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	VERDADERO  shift 75
+	FALSO  shift 76
+	CADENA  shift 77
+	CARACTER  shift 78
+	NO  shift 79
+	.  error
+
+	expresion_booleana  goto 125
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 83
+
+
+state 100
+	sentencia : MIENTRAS expresion_booleana $$10 . HACER SL sentencias SL FIN  (42)
+
+	HACER  shift 126
+	.  error
+
+
+state 101
+	expresion : expresion MAS . expresion  (64)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 127
+	variable  goto 82
+
+
+state 102
+	expresion : expresion MENOS . expresion  (65)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 128
+	variable  goto 82
+
+
+state 103
+	expresion : expresion POR . expresion  (66)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 129
+	variable  goto 82
+
+
+state 104
+	expresion : expresion DIV . expresion  (67)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 130
+	variable  goto 82
+
+
+state 105
+	expresion : expresion PRC . expresion  (68)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 131
+	variable  goto 82
+
+
+state 106
+	relacional : relacional MEN . relacional  (57)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 132
+
+
+state 107
+	relacional : relacional MAY . relacional  (58)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 133
+
+
+state 108
+	relacional : relacional MENI . relacional  (59)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 134
+
+
+state 109
+	relacional : relacional MAYI . relacional  (60)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 135
+
+
+state 110
+	relacional : relacional II . relacional  (61)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 136
+
+
+state 111
+	relacional : relacional MM . relacional  (62)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 137
+
+
+state 112
+	sentencia : SI expresion_booleana SL . $$9 sentencias SL SINO SL sentencias SL FIN  (40)
+	$$9 : .  (39)
+
+	.  reduce 39
+
+	$$9  goto 138
+
+
+state 113
+	sentencia : SI expresion_booleana ENTONCES . SL $$8 sentencias SL FIN  (38)
+
+	SL  shift 139
+	.  error
+
+
+state 114
+	sentencia : HACER SL $$11 . sentencias SL MIENTRASQUE expresion_booleana  (44)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencias  goto 140
+	sentencia  goto 70
+
+
+state 115
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN . SL $$5 funciones  (22)
+
+	SL  shift 141
+	.  error
+
+
+state 116
+	sentencias : sentencias SL $$7 . sentencia  (35)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencia  goto 142
+
+
+state 117
+	arreglo : ID LCOR . expresion RCOR  (77)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 143
+	variable  goto 82
+
+
+state 118
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+	lista_param : expresion .  (83)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	RPAR  reduce 83
+	COMA  reduce 83
+
+
+state 119
+	expresion : ID LPAR parametros . RPAR  (74)
+
+	RPAR  shift 144
+	.  error
+
+
+state 120
+	parametros : lista_param .  (80)
+	lista_param : lista_param . COMA expresion  (82)
+
+	COMA  shift 145
+	RPAR  reduce 80
+
+
+state 121
+	variable : ID PNT ID .  (76)
+
+	.  reduce 76
+
+
+state 122
+	arreglo : arreglo LCOR . expresion RCOR  (78)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 146
+	variable  goto 82
+
+
+state 123
+	expresion : LPAR expresion RPAR .  (69)
+
+	.  reduce 69
+
+
+state 124
+	expresion_booleana : expresion_booleana . O expresion_booleana  (51)
+	expresion_booleana : expresion_booleana O expresion_booleana .  (51)
+	expresion_booleana : expresion_booleana . Y expresion_booleana  (52)
+
+	Y  shift 99
+	SL  reduce 51
+	ENTONCES  reduce 51
+	HACER  reduce 51
+	O  reduce 51
+
+
+state 125
+	expresion_booleana : expresion_booleana . O expresion_booleana  (51)
+	expresion_booleana : expresion_booleana . Y expresion_booleana  (52)
+	expresion_booleana : expresion_booleana Y expresion_booleana .  (52)
+
+	.  reduce 52
+
+
+state 126
+	sentencia : MIENTRAS expresion_booleana $$10 HACER . SL sentencias SL FIN  (42)
+
+	SL  shift 147
+	.  error
+
+
+state 127
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion MAS expresion .  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	MEN  reduce 64
+	MAY  reduce 64
+	MENI  reduce 64
+	MAYI  reduce 64
+	II  reduce 64
+	MM  reduce 64
+	MAS  reduce 64
+	MENOS  reduce 64
+	RPAR  reduce 64
+	RCOR  reduce 64
+	COMA  reduce 64
+	SL  reduce 64
+	ENTONCES  reduce 64
+	HACER  reduce 64
+	O  reduce 64
+	Y  reduce 64
+
+
+state 128
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion MENOS expresion .  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	MEN  reduce 65
+	MAY  reduce 65
+	MENI  reduce 65
+	MAYI  reduce 65
+	II  reduce 65
+	MM  reduce 65
+	MAS  reduce 65
+	MENOS  reduce 65
+	RPAR  reduce 65
+	RCOR  reduce 65
+	COMA  reduce 65
+	SL  reduce 65
+	ENTONCES  reduce 65
+	HACER  reduce 65
+	O  reduce 65
+	Y  reduce 65
+
+
+state 129
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion POR expresion .  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	.  reduce 66
+
+
+state 130
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion DIV expresion .  (67)
+	expresion : expresion . PRC expresion  (68)
+
+	.  reduce 67
+
+
+state 131
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+	expresion : expresion PRC expresion .  (68)
+
+	.  reduce 68
+
+
+state 132
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional MEN relacional .  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional . MM relacional  (62)
+
+	MENI  shift 108
+	MAYI  shift 109
+	II  shift 110
+	MM  shift 111
+	MEN  reduce 57
+	MAY  reduce 57
+	SL  reduce 57
+	ENTONCES  reduce 57
+	HACER  reduce 57
+	O  reduce 57
+	Y  reduce 57
+
+
+state 133
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional MAY relacional .  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional . MM relacional  (62)
+
+	MENI  shift 108
+	MAYI  shift 109
+	II  shift 110
+	MM  shift 111
+	MEN  reduce 58
+	MAY  reduce 58
+	SL  reduce 58
+	ENTONCES  reduce 58
+	HACER  reduce 58
+	O  reduce 58
+	Y  reduce 58
+
+
+state 134
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional MENI relacional .  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional . MM relacional  (62)
+
+	II  shift 110
+	MM  shift 111
+	MEN  reduce 59
+	MAY  reduce 59
+	MENI  reduce 59
+	MAYI  reduce 59
+	SL  reduce 59
+	ENTONCES  reduce 59
+	HACER  reduce 59
+	O  reduce 59
+	Y  reduce 59
+
+
+state 135
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional MAYI relacional .  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional . MM relacional  (62)
+
+	II  shift 110
+	MM  shift 111
+	MEN  reduce 60
+	MAY  reduce 60
+	MENI  reduce 60
+	MAYI  reduce 60
+	SL  reduce 60
+	ENTONCES  reduce 60
+	HACER  reduce 60
+	O  reduce 60
+	Y  reduce 60
+
+
+state 136
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional II relacional .  (61)
+	relacional : relacional . MM relacional  (62)
+
+	.  reduce 61
+
+
+state 137
+	relacional : relacional . MEN relacional  (57)
+	relacional : relacional . MAY relacional  (58)
+	relacional : relacional . MENI relacional  (59)
+	relacional : relacional . MAYI relacional  (60)
+	relacional : relacional . II relacional  (61)
+	relacional : relacional . MM relacional  (62)
+	relacional : relacional MM relacional .  (62)
+
+	.  reduce 62
+
+
+state 138
+	sentencia : SI expresion_booleana SL $$9 . sentencias SL SINO SL sentencias SL FIN  (40)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencias  goto 148
+	sentencia  goto 70
+
+
+state 139
+	sentencia : SI expresion_booleana ENTONCES SL . $$8 sentencias SL FIN  (38)
+	$$8 : .  (37)
+
+	.  reduce 37
+
+	$$8  goto 149
+
+
+state 140
+	sentencias : sentencias . SL $$7 sentencia  (35)
+	sentencia : HACER SL $$11 sentencias . SL MIENTRASQUE expresion_booleana  (44)
+
+	SL  shift 150
+	.  error
+
+
+state 141
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL . $$5 funciones  (22)
+	$$5 : .  (21)
+
+	.  reduce 21
+
+	$$5  goto 151
+
+
+state 142
+	sentencias : sentencias SL $$7 sentencia .  (35)
+
+	.  reduce 35
+
+
+state 143
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+	arreglo : ID LCOR expresion . RCOR  (77)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	RCOR  shift 152
+	.  error
+
+
+state 144
+	expresion : ID LPAR parametros RPAR .  (74)
+
+	.  reduce 74
+
+
+state 145
+	lista_param : lista_param COMA . expresion  (82)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	CADENA  shift 77
+	CARACTER  shift 78
+	.  error
+
+	expresion  goto 153
+	variable  goto 82
+
+
+state 146
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+	arreglo : arreglo LCOR expresion . RCOR  (78)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	RCOR  shift 154
+	.  error
+
+
+state 147
+	sentencia : MIENTRAS expresion_booleana $$10 HACER SL . sentencias SL FIN  (42)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencias  goto 155
+	sentencia  goto 70
+
+
+state 148
+	sentencias : sentencias . SL $$7 sentencia  (35)
+	sentencia : SI expresion_booleana SL $$9 sentencias . SL SINO SL sentencias SL FIN  (40)
+
+	SL  shift 156
+	.  error
+
+
+state 149
+	sentencia : SI expresion_booleana ENTONCES SL $$8 . sentencias SL FIN  (38)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencias  goto 157
+	sentencia  goto 70
+
+
+state 150
+	sentencias : sentencias SL . $$7 sentencia  (35)
+	sentencia : HACER SL $$11 sentencias SL . MIENTRASQUE expresion_booleana  (44)
+	$$7 : .  (34)
+
+	MIENTRASQUE  shift 158
+	ID  reduce 34
+	TERMINAR  reduce 34
+	MIENTRAS  reduce 34
+	SI  reduce 34
+	ESCRIBIR  reduce 34
+	LEER  reduce 34
+	DEVOLVER  reduce 34
+	HACER  reduce 34
+
+	$$7  goto 116
+
+
+state 151
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 . funciones  (22)
+	funciones : .  (24)
+
+	error  shift 25
+	FUNC  shift 26
+	$end  reduce 24
+
+	funciones  goto 159
+
+
+state 152
+	arreglo : ID LCOR expresion RCOR .  (77)
+
+	.  reduce 77
+
+
+state 153
+	expresion : expresion . MAS expresion  (64)
+	expresion : expresion . MENOS expresion  (65)
+	expresion : expresion . POR expresion  (66)
+	expresion : expresion . DIV expresion  (67)
+	expresion : expresion . PRC expresion  (68)
+	lista_param : lista_param COMA expresion .  (82)
+
+	MAS  shift 101
+	MENOS  shift 102
+	POR  shift 103
+	DIV  shift 104
+	PRC  shift 105
+	RPAR  reduce 82
+	COMA  reduce 82
+
+
+state 154
+	arreglo : arreglo LCOR expresion RCOR .  (78)
+
+	.  reduce 78
+
+
+state 155
+	sentencias : sentencias . SL $$7 sentencia  (35)
+	sentencia : MIENTRAS expresion_booleana $$10 HACER SL sentencias . SL FIN  (42)
+
+	SL  shift 160
+	.  error
+
+
+state 156
+	sentencias : sentencias SL . $$7 sentencia  (35)
+	sentencia : SI expresion_booleana SL $$9 sentencias SL . SINO SL sentencias SL FIN  (40)
+	$$7 : .  (34)
+
+	SINO  shift 161
+	ID  reduce 34
+	TERMINAR  reduce 34
+	MIENTRAS  reduce 34
+	SI  reduce 34
+	ESCRIBIR  reduce 34
+	LEER  reduce 34
+	DEVOLVER  reduce 34
+	HACER  reduce 34
+
+	$$7  goto 116
+
+
+state 157
+	sentencias : sentencias . SL $$7 sentencia  (35)
+	sentencia : SI expresion_booleana ENTONCES SL $$8 sentencias . SL FIN  (38)
+
+	SL  shift 162
+	.  error
+
+
+state 158
+	sentencia : HACER SL $$11 sentencias SL MIENTRASQUE . expresion_booleana  (44)
+
+	NUM  shift 72
+	ID  shift 73
+	LPAR  shift 74
+	VERDADERO  shift 75
+	FALSO  shift 76
+	CADENA  shift 77
+	CARACTER  shift 78
+	NO  shift 79
+	.  error
+
+	expresion_booleana  goto 163
+	expresion  goto 81
+	variable  goto 82
+	relacional  goto 83
+
+
+state 159
+	funciones : FUNC tipo ID LPAR argumentos RPAR INICIO $$4 SL declaraciones sentencias SL FIN SL $$5 funciones .  (22)
+
+	.  reduce 22
+
+
+state 160
+	sentencias : sentencias SL . $$7 sentencia  (35)
+	sentencia : MIENTRAS expresion_booleana $$10 HACER SL sentencias SL . FIN  (42)
+	$$7 : .  (34)
+
+	FIN  shift 164
+	ID  reduce 34
+	TERMINAR  reduce 34
+	MIENTRAS  reduce 34
+	SI  reduce 34
+	ESCRIBIR  reduce 34
+	LEER  reduce 34
+	DEVOLVER  reduce 34
+	HACER  reduce 34
+
+	$$7  goto 116
+
+
+state 161
+	sentencia : SI expresion_booleana SL $$9 sentencias SL SINO . SL sentencias SL FIN  (40)
+
+	SL  shift 165
+	.  error
+
+
+state 162
+	sentencias : sentencias SL . $$7 sentencia  (35)
+	sentencia : SI expresion_booleana ENTONCES SL $$8 sentencias SL . FIN  (38)
+	$$7 : .  (34)
+
+	FIN  shift 166
+	ID  reduce 34
+	TERMINAR  reduce 34
+	MIENTRAS  reduce 34
+	SI  reduce 34
+	ESCRIBIR  reduce 34
+	LEER  reduce 34
+	DEVOLVER  reduce 34
+	HACER  reduce 34
+
+	$$7  goto 116
+
+
+state 163
+	sentencia : HACER SL $$11 sentencias SL MIENTRASQUE expresion_booleana .  (44)
+	expresion_booleana : expresion_booleana . O expresion_booleana  (51)
+	expresion_booleana : expresion_booleana . Y expresion_booleana  (52)
+
+	O  shift 98
+	Y  shift 99
+	SL  reduce 44
+
+
+state 164
+	sentencia : MIENTRAS expresion_booleana $$10 HACER SL sentencias SL FIN .  (42)
+
+	.  reduce 42
+
+
+state 165
+	sentencia : SI expresion_booleana SL $$9 sentencias SL SINO SL . sentencias SL FIN  (40)
+
+	ID  shift 61
+	TERMINAR  shift 62
+	MIENTRAS  shift 63
+	SI  shift 64
+	ESCRIBIR  shift 65
+	LEER  shift 66
+	DEVOLVER  shift 67
+	HACER  shift 68
+	.  error
+
+	sentencias  goto 167
+	sentencia  goto 70
+
+
+state 166
+	sentencia : SI expresion_booleana ENTONCES SL $$8 sentencias SL FIN .  (38)
+
+	.  reduce 38
+
+
+state 167
+	sentencias : sentencias . SL $$7 sentencia  (35)
+	sentencia : SI expresion_booleana SL $$9 sentencias SL SINO SL sentencias . SL FIN  (40)
+
+	SL  shift 168
+	.  error
+
+
+state 168
+	sentencias : sentencias SL . $$7 sentencia  (35)
+	sentencia : SI expresion_booleana SL $$9 sentencias SL SINO SL sentencias SL . FIN  (40)
+	$$7 : .  (34)
+
+	FIN  shift 169
+	ID  reduce 34
+	TERMINAR  reduce 34
+	MIENTRAS  reduce 34
+	SI  reduce 34
+	ESCRIBIR  reduce 34
+	LEER  reduce 34
+	DEVOLVER  reduce 34
+	HACER  reduce 34
+
+	$$7  goto 116
+
+
+state 169
+	sentencia : SI expresion_booleana SL $$9 sentencias SL SINO SL sentencias SL FIN .  (40)
+
+	.  reduce 40
+
+
+56 terminals, 34 nonterminals
+84 grammar rules, 170 states

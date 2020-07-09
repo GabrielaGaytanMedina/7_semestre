@@ -1,0 +1,7 @@
+int a,y;
+float x; 
+a = 3;
+mundo = 0;
+x = 1;
+adios = 3 + 2;
+

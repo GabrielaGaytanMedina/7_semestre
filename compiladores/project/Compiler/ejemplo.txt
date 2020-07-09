@@ -1,0 +1,17 @@
+ent [5] Hola, Holas
+ent dato, ad
+car lata
+dreal manos
+
+func sin Cuqui(sin) inicio
+	ent dato
+	ent a
+	dato := 5 + 2
+	escribir 5
+	si verdadero oo falso yy verdadero entonces
+		escribir 5
+	fin
+	leer a
+	devolver
+	<**>
+fin

@@ -1,0 +1,140 @@
+<reservada> begin 
+<especial> { 
+<space> 
+ 
+<space> 	 
+<id> int 
+<space>   
+<id> ahorcamiento 
+<space>   
+<asignacion> := 
+<space>   
+<entero> 23 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<id> int 
+<space>   
+<entero> 98 
+<id> derucas 
+<space>   
+<asignacion> := 
+<space>   
+<real> 4.56 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<id> int 
+<space>   
+<id> uwu 
+<space>   
+<asignacion> := 
+<entero> 69 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<id> printf 
+<especial> ( 
+<cadena> "Hail Hidra" 
+<especial> ) 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<id> printf 
+<especial> ( 
+<id> aloha 
+<especial> ) 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<id> arr1 
+error de caracter [ en la linea 7 
+error de caracter ] en la linea 7 
+<space>   
+<relacional> = 
+<space>   
+<real> 1,2 
+<especial> , 
+<entero> 3 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<reservada> if 
+<especial> ( 
+<id> pera 
+<relacional> ¿ 
+<id> pero 
+<relacional> ¡ 
+<especial> ) 
+<especial> { 
+<especial> } 
+<reservada> else 
+<especial> { 
+<especial> } 
+<space> 	 
+<space> 
+ 
+<space> 	 
+<reservada> do 
+<especial> { 
+<space> 
+ 
+<space> 	 
+<coment> -- ¡¿ comentario1
+ 
+<space> 	 
+<comult> <*
+	block of code
+	{}
+	*> 
+<space> 	 
+<space> 
+ 
+<space> 
+ 
+<space> 	 
+error de caracter ] en la linea 16 
+<space>   
+<space> 
+ 
+<space> 
+ 
+<space> 	 
+<especial> } 
+<reservada> while 
+<especial> ( 
+<id> dog 
+<relacional> = 
+<id> god 
+<especial> ) 
+<especial> ; 
+<space> 
+ 
+<space> 	 
+<reservada> if 
+<especial> ( 
+<id> this 
+<especial> ) 
+<space> 
+ 
+<space> 	 
+<space> 	 
+<id> printf 
+<especial> ( 
+<cadena> "\n" 
+<especial> ) 
+<especial> ; 
+<space> 
+ 
+<space> 
+ 
+<especial> } 
+<reservada> end 
+<space> 
+ 

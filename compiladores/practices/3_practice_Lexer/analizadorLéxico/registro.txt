@@ -1,0 +1,17 @@
+registro
+real abeja
+car 
+real mosca
+func real main(sin)
+inicio
+--este es un comentario
+abeja := 10
+mosca :=20
+dato := 'c'
+<*este es otro comentario
+que termina en la linea 2*>
+si abeja<mosca entonces
+abeja := abeja + 1
+fin
+fin
+
